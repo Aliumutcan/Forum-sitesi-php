@@ -1,0 +1,108 @@
+body{
+	background-color: #e0e0e0;
+}
+
+a{
+	color: black;
+	text-decoration-style: none;
+	text-decoration-line: none;
+}
+a:hover{
+	color: black;
+	text-decoration-style: none;
+	text-decoration-line: none;
+}
+.menu{
+	background-color: #33adff;
+	font-size: 18px;
+	padding-top: 10px;
+}
+.menu .giris{
+	background-color: #00ff55;
+}
+
+.menu .col-md-1{
+	text-align: center;
+	color: white;
+}
+.menu .col-md-1:hover {
+	cursor: pointer;
+	text-align: center;
+	color: white;
+}
+.menu .dropdown-item{
+	background-color: transparent;
+}
+.icerik{
+	margin-top: 10px;
+	padding: 10px;
+	background-color: white;
+}
+.icerik .panel-title{
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+ 	border-radius: 5px 5px 5px 5px;
+ 	background-color: #e0e0e0;
+ 	padding: 5px;
+}
+.icerik .panel-body{
+	margin-left: 30px;
+}
+.kategori-baslik{
+	font-size: 16px;
+	color: #ff8800;
+}
+.kategori-aciklama{
+	font-size: 12px;
+	color: black;
+}
+.footer{
+	margin-top: 10px;
+	background-color: #424140;
+	text-align: center;
+	font-size: 12px;
+	padding: 10px;
+	color: white;
+}
+
+/* yazı alanı css'leri*/
+
+.yazilar{
+	background-color: #f7f7f7;
+}
+.yazi-resim{
+	padding: 10px;
+}
+.yazi-diger{
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.yazi-icerik{
+	background-color: white;
+	padding: 5px;
+	color: black;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+ 	border-radius: 5px 5px 5px 5px;
+}
+.yazilar .row{
+	
+}
+
+/* prpfil css'leri*/
+
+.prof-banner{
+	border: solid 1px #f7f7f7;
+}
+
+/* gelen mesajlar */
+
+.gelen-mesaj{
+	padding: 20px;
+
+}
+.gelen-mesaj textarea{
+	width: 300px;
+	height: 200px;
+}
