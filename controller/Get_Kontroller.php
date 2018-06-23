@@ -126,6 +126,8 @@ function Get_Forum_Metinlerim($sayfa){
 
 function Get_Konu_Olustur(){
 	if(!Kullanici_Kontrolu()){Get_Hata_Sayfasi("Bilk önce giriş yapmanız gerekiyor","uyari");return;}
+	if($_SESSION['kullanici'][0]["konuacma"]>0)
+		{Get_Hata_Sayfasi("Konu acma engeliniz bulunmaktadır.","hata");Onceki_Sayfa();return;}
 
 	$model=new Tum_Tablolar();
 	$kategoriler=$model->Kategoriler();

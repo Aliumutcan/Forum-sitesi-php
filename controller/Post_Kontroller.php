@@ -36,17 +36,40 @@ function Post_Giris(){
 		,"kayit_tarihi"
 		,"haberdar_olmak_istiyorum"
 		,"unvan"
-		,"(select resim_yol from Galeri where resim_kategorisi='profil' and kategori_id=Kullanicilar.id) as resim"],"where eposta=? and sifre=?",[$_POST["eposta"],sha1($_POST["sifre"])]);
+		,"(select resim_yol from Galeri where resim_kategorisi='profil' and kategori_id=Kullanicilar.id) as resim"]
+		,"where eposta=? and sifre=?"
+		,[$_POST["eposta"],sha1($_POST["sifre"])]);
 	
 	if(is_null($gelen_veriler)) Get_Hata_Sayfasi("Kayıtlı kullanıcı bulunamadı.","uyari");
-	else if(isset($gelen_veriler))$_SESSION['kullanici'] = $gelen_veriler;
+	else if(isset($gelen_veriler))
+		{
+			$konuacma=0;
+			$mesajyazma=0;
+			$engeller=$model->Engellenenler();
+			$engeller=$engeller->Select([],"where kullanici_id=?",[$gelen_veriler[0]["id"]]);
+			foreach ($engeller as $value) {
+				if(strtotime(date("Y-m-d"))<=strtotime($value["engel_suresi"])){
+					if($value["engel_tipi"]=="konu-acma")
+						$konuacma++;
+					else
+						$mesajyazma++;
+				}
+			}
+			$gelen_veriler[0]["konuacma"]=$konuacma;
+			$gelen_veriler[0]["mesajyazma"]=$mesajyazma;
+			$_SESSION['kullanici'] = $gelen_veriler;
+		}
 	else Get_Hata_Sayfasi("Bir hata ile karşılaşıldı.","hata");
+
+
 	
 	Onceki_Sayfa();
 }
 
 function Post_Yeni_Konu_Olustur(){
 	if(!Kullanici_Kontrolu()){Get_Hata_Sayfasi("Bilk önce giriş yapmanız gerekiyor","uyari");return;}
+	if($_SESSION['kullanici'][0]["konuacma"]>0)
+		{Get_Hata_Sayfasi("Konu acma engeliniz bulunmaktadır.","hata");Onceki_Sayfa();return;}
 
 	$model=new Tum_Tablolar();
 	$konular=$model->Konular();
@@ -99,9 +122,13 @@ function Post_Sikayet_Olustur(){
 
 function Post_Yeni_Mesaj_Olustur(){
 	if(!Kullanici_Kontrolu()){Get_Hata_Sayfasi("Bilk önce giriş yapmanız gerekiyor","uyari");return;}
+	if($_SESSION['kullanici'][0]["mesajyazma"]>0)
+		{Get_Hata_Sayfasi("Mesaj yazma engeliniz bulunmaktadır.","hata");Onceki_Sayfa();return;}
+	
+	$model=new Tum_Tablolar();
 
 	if (isset($_POST["icerik"]) && isset($_POST["id"])) {
-		$model=new Tum_Tablolar();
+		
 		$mesaj=$model->Mesajlar();
 		$mesaj->mesaj_id=intval($_POST["id"]);
 		$mesaj->icerik=$_POST["icerik"];
@@ -113,7 +140,6 @@ function Post_Yeni_Mesaj_Olustur(){
 		if($cevap>0) Get_Hata_Sayfasi("Mesaj Gönderildi.","basarili");
 		else Get_Hata_Sayfasi("Mesaj göndermede hada oluştu.","uyari");
 	}else if (isset($_POST["icerik"]) && isset($_POST["kullanici_id"])) {
-		$model=new Tum_Tablolar();
 		$mesaj=$model->Mesajlar();
 		$mesaj->icerik=$_POST["icerik"];
 		$mesaj->baslik=$_POST["baslik"];
@@ -157,16 +183,16 @@ function Post_Begeni_Ret(){
 		$konular->begenme=(intval($veriler[0]["begenme"])+1);
 		$konular->Update("",[]);
 		
-		Get_Hata_Sayfasi("begeni eklenedi","uyari");
+		Get_Hata_Sayfasi("begeni eklendi","basarili");
 	}else if($_POST["button"]=="Sevmedim"){
 		$konular->begenmeme=(intval($veriler[0]["begenmeme"])+1);
 		$konular->Update("",[]);
 		
-		Get_Hata_Sayfasi("begeni eklenedi","uyari");
+		Get_Hata_Sayfasi("begeni eklendi","basarili");
 	}else
 		return;
 
-	//Onceki_Sayfa();
+	Onceki_Sayfa();
 }
 
 function Post_Kategori_Duzenle(){
@@ -218,7 +244,13 @@ function Post_Kullanici_Engelle(){
 	if (isset($_POST["engel_tipi"]) && isset($_POST["engel_tipi"])) {
 		$model=new Tum_Tablolar();
 		$engeller=$model->Engellenenler();
-		$engeller->kullanici_id=intval($_POST["kullanici_id"]);
+		
+
+		$kullanici=$model->Konular();
+		$kullanici=$kullanici->Select(["kullanici_id"],"where id=?",[$_POST["kullanici_id"]]);
+
+		$engeller->kullanici_id=intval($kullanici[0]["kullanici_id"]);
+
 		$engeller->engel_tipi=$_POST["engel_tipi"];
 		$engeller->engel_suresi=$_POST["tarih"];
 		$engeller->engelleme_tarihi=date("Y-m-d");

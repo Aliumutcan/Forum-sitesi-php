@@ -23,7 +23,9 @@ else
 foreach ($url_dizisi as $value) {
 	if(ord($value[0])>64 && ord($value[0])<123){$_SESSION["title"]=$value;break;}
 }
+
 include("../view/banner.php");
+echo var_dump($_SESSION['kullanici']);
 if ($methot=="GET") {
 	if($url_dizisi[0]=="anasayfa")
 		Get_Anasayfa();
