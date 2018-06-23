@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: localhost:3306
--- Üretim Zamanı: 14 Haz 2018, 13:34:48
+-- Üretim Zamanı: 24 Haz 2018, 00:32:52
 -- Sunucu sürümü: 5.7.22-0ubuntu18.04.1
 -- PHP Sürümü: 5.6.36-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -34,6 +34,14 @@ CREATE TABLE `Engellenenler` (
   `engelleme_tarihi` varchar(30) CHARACTER SET utf8 COLLATE utf8_turkish_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Tablo döküm verisi `Engellenenler`
+--
+
+INSERT INTO `Engellenenler` (`id`, `kullanici_id`, `engel_tipi`, `engel_suresi`, `engelleme_tarihi`) VALUES
+(21, 7, 'mesaj-yazma', '2018-07-06', '2018-06-23'),
+(20, 7, 'konu-acma', '2018-07-02', '2018-06-23');
+
 -- --------------------------------------------------------
 
 --
@@ -46,14 +54,6 @@ CREATE TABLE `Galeri` (
   `resim_kategorisi` varchar(50) NOT NULL,
   `kategori_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Tablo döküm verisi `Galeri`
---
-
-INSERT INTO `Galeri` (`id`, `resim_yol`, `resim_kategorisi`, `kategori_id`) VALUES
-(5, 'img/profil/exit.png', 'profil', 4),
-(6, 'img/profil/Gnu_wallpaper.png', 'profil', 3);
 
 -- --------------------------------------------------------
 
@@ -73,11 +73,8 @@ CREATE TABLE `Kategoriler` (
 --
 
 INSERT INTO `Kategoriler` (`id`, `kategori_adi`, `aciklama`, `durum`) VALUES
-(1, 'Genel', 'dasd asdasd asda', 'true'),
-(2, 'Dünya', 'dasd asdasd asda', 'true'),
-(3, 'Bilgisayar', 'dasd asdasd asda', 'true'),
-(4, 'dasd', 'asdas', 'false'),
-(5, 'yeni', 'Düzenlenedi', 'false');
+(6, 'Genel', 'Genel kategorisi', 'true'),
+(7, 'Bilgisayar', 'yok', 'true');
 
 -- --------------------------------------------------------
 
@@ -104,12 +101,9 @@ CREATE TABLE `Konular` (
 --
 
 INSERT INTO `Konular` (`id`, `baslik`, `icerik`, `kategori_id`, `kullanici_id`, `konu_id`, `goruntulenme`, `begenme`, `begenmeme`, `durum`, `tarih`) VALUES
-(4, 'ilk başlık', '<p>ilk başlık d&uuml;zeltildi</p>\r\n', 3, 3, 0, 0, 2, 1, 'true', '2018-06-05'),
-(8, '', '<p>asd aslkdj halskjdha sşkdy apıwudypaskhdaoısh dpah sad a</p>\r\n', 0, 3, 0, 0, 0, 0, 'false', '2018-06-05'),
-(5, 'deneme başlığı', '<p>da sda sda sdas das dasd asd asd</p>\r\n', 1, 3, 0, 0, 3, 1, 'true', '2018-05-31'),
-(6, 'sad asd asd', '<p>asd aıs dhakjsldlashdşasda sd as</p>\r\n', 1, 3, 0, 0, 0, 0, 'true', '2018-05-20'),
-(7, 'kapalı konu', '<p>asd asıda ıhsda sda sd</p>\r\n', 1, 3, 0, 0, 0, 0, '0', '2018-05-20'),
-(11, '', '<p>dasd asd asd asda sda sdasd asda</p>\r\n', 0, 3, 4, 0, 2, 1, 'false', '2018-06-05');
+(12, 'İlk konu başlığı', '<p>deneme konusu</p>\r\n', 6, 6, 0, 0, 2, 1, 'true', '2018-06-22'),
+(13, '', '<p>ilk başlık denemeleri</p>\r\n', 0, 7, 12, 0, 0, 0, 'true', '2018-06-22'),
+(14, 'bilgisayar konu deneme', '<p>deneme</p>\r\n', 7, 8, 0, 0, 0, 0, 'true', '2018-06-22');
 
 -- --------------------------------------------------------
 
@@ -134,9 +128,10 @@ CREATE TABLE `Kullanicilar` (
 --
 
 INSERT INTO `Kullanicilar` (`id`, `adi`, `soyadi`, `eposta`, `sifre`, `kayit_tarihi`, `tesekkur_sayisi`, `haberdar_olmak_istiyorum`, `unvan`) VALUES
-(1, 'Adem', 'Duysak', 'aliumutcankul05@gmail.com', 'asdas', '2018.04.21', 0, 1, 'Yonetici'),
-(3, 'ali umutcan', 'KUL', 'deneme@gmail.com', '92429d82a41e930486c6de5ebda9602d55c39986', '2018.05.01', 0, 1, 'Yönetici'),
-(4, 'ali', 'kul', 'aliumutcankul05@gmail.com', '58ea5752c604312084f29df3f56181af20d19c3b', '2018.06.12', 0, 1, 'üye');
+(6, 'Ali Umutcan', 'kul', 'deneme@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '2018.06.22', 0, 1, 'Yönetici'),
+(7, 'cihan', 'erol', 'deneme2@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '2018.06.22', 0, 1, 'üye'),
+(8, 'kullanici', 'kullanici', 'deneme3@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '2018.06.22', 0, 1, 'üye'),
+(9, 'kullanici2', 'kullanici', 'deneme4@gmail.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', '2018.06.22', 0, 1, 'üye');
 
 -- --------------------------------------------------------
 
@@ -174,17 +169,7 @@ CREATE TABLE `Mesajlar` (
 --
 
 INSERT INTO `Mesajlar` (`id`, `baslik`, `icerik`, `alan_id`, `gonderen_id`, `mesaj_id`, `durum`, `tarih`) VALUES
-(1, 'baslik1', 'icerik1', 1, 3, 0, 'false', '2018-05-21'),
-(2, 'baslik1', 'icerik1', 3, 1, 1, 'true', '2018-05-21'),
-(27, '', 'Mesajınız', 1, 3, 1, '1', '2018-05-31'),
-(26, '', 'Mesajınız', 1, 3, 1, '1', '2018-05-31'),
-(25, '', 'Mesajınız', 1, 3, 1, '1', '2018-05-31'),
-(24, '', 'Mesajınız', 1, 3, 1, '1', '2018-05-31'),
-(23, '', 'giden', 1, 3, 1, '1', '2018-05-31'),
-(22, '', 'as das dasaaaaaaaaaaaaaaaaaa', 1, 3, 1, '1', '2018-05-21'),
-(21, '', 'sad asd as das d', 1, 3, 1, '1', '2018-05-21'),
-(20, '', 'Mesajınız', 1, 3, 1, '1', '2018-05-21'),
-(28, '', 'askdjakshdkljahkshdlkahsdahslkdhaklsda', 3, 3, 0, '1', '2018-06-06');
+(31, 'mesaj denemesi', 'deneme deneme mesaj', 6, 7, 0, 'true', '2018-06-22');
 
 -- --------------------------------------------------------
 
@@ -207,7 +192,7 @@ CREATE TABLE `Sikayetler` (
 --
 
 INSERT INTO `Sikayetler` (`id`, `aciklama`, `link`, `sikayet_eden_id`, `sikayet_edilen_id`, `tarih`, `durum`) VALUES
-(25, 'Acıklama', 'http://localhost/konu-icerik/4/1/ilk-baslik.html#11', 3, 11, '12.06.2018', 'false');
+(26, 'uygunsuz konuşma', 'http://localhost/konu-icerik/12/1/ilk-konu-basligi.html#13', 8, 13, '22.06.2018', 'false');
 
 --
 -- Dökümü yapılmış tablolar için indeksler
@@ -269,7 +254,7 @@ ALTER TABLE `Sikayetler`
 -- Tablo için AUTO_INCREMENT değeri `Engellenenler`
 --
 ALTER TABLE `Engellenenler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- Tablo için AUTO_INCREMENT değeri `Galeri`
 --
@@ -279,17 +264,17 @@ ALTER TABLE `Galeri`
 -- Tablo için AUTO_INCREMENT değeri `Kategoriler`
 --
 ALTER TABLE `Kategoriler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Tablo için AUTO_INCREMENT değeri `Konular`
 --
 ALTER TABLE `Konular`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- Tablo için AUTO_INCREMENT değeri `Kullanicilar`
 --
 ALTER TABLE `Kullanicilar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Tablo için AUTO_INCREMENT değeri `Log`
 --
@@ -299,12 +284,12 @@ ALTER TABLE `Log`
 -- Tablo için AUTO_INCREMENT değeri `Mesajlar`
 --
 ALTER TABLE `Mesajlar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- Tablo için AUTO_INCREMENT değeri `Sikayetler`
 --
 ALTER TABLE `Sikayetler`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
