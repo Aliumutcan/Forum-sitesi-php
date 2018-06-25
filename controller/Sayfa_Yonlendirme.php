@@ -25,7 +25,6 @@ foreach ($url_dizisi as $value) {
 }
 
 include("../view/banner.php");
-echo var_dump($_SESSION['kullanici']);
 if ($methot=="GET") {
 	if($url_dizisi[0]=="anasayfa")
 		Get_Anasayfa();
